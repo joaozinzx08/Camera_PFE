@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#171225">
+    <meta name="description" content="Camera PFE Studio - capture fotos com filtros e identificação.">
+
+    <title>Camera PFE Studio</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-content">
+            <a class="brand" href="#" aria-label="Camera PFE Studio - início">
+                <span class="brand-icon">📸</span>
+                <span>
+                    <strong>Camera PFE Studio</strong>
+                    <small>Seu estúdio fotográfico</small>
+                </span>
+            </a>
+
+            <span class="header-tag">PHOTO STUDIO</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <p class="eyebrow">SEU MOMENTO, SUA FOTO</p>
+            <h1>Capture momentos especiais.</h1>
+            <p>
+                Ative sua câmera, personalize sua foto e salve
+                o resultado com identificação, data e horário.
+            </p>
+        </section>
+
+        <div class="studio-grid">
+            <section class="panel camera-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">ESTÚDIO</p>
+                        <h2>Câmera ao vivo</h2>
+                    </div>
+
+                    <span id="cameraBadge" class="camera-badge">
+                        CÂMERA DESLIGADA
+                    </span>
+                </div>
+
+                <div class="camera-frame">
+                    <video
+                        id="video"
+                        autoplay
+                        muted
+                        playsinline
+                        aria-label="Prévia da câmera"
+                    ></video>
+
+                    <div id="cameraPlaceholder" class="camera-placeholder">
+                        <div class="placeholder-icon">📷</div>
+                        <h3>Sua câmera começa aqui</h3>
+                        <p>Clique em “Ligar câmera” para começar.</p>
+                    </div>
+
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        <span id="liveLabel">AGUARDANDO CÂMERA</span>
+                    </div>
+                </div>
+
+                <div class="camera-actions">
+                    <button
+                        type="button"
+                        id="toggleCamera"
+                        class="button button-primary"
+                        aria-pressed="false"
+                    >
+                        <span id="cameraButtonIcon">▶</span>
+                        <span id="cameraButtonText">Ligar câmera</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        id="flipCamera"
+                        class="button button-secondary"
+                        disabled
+                    >
+                        ↔ <span>Desespelhar</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        id="captureButton"
+                        class="button button-accent"
+                        disabled
+                    >
+                        📸 Capturar foto
+                    </button>
+                </div>
+
+                <p
+                    id="statusMessage"
+                    class="status-message"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Clique em Ligar câmera para começar.
+                </p>
+            </section>
+
+            <aside class="panel settings-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">PERSONALIZAÇÃO</p>
+                        <h2>Configurações</h2>
+                    </div>
+                    <span class="settings-icon">⚙️</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="identification">Identificação da foto</label>
+                    <input
+                        type="text"
+                        id="identification"
+                        placeholder="Ex.: Minha foto"
+                        maxlength="100"
+                    >
+                    <small>Esse texto aparecerá na foto capturada.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="filterSelect">Filtro fotográfico</label>
+                    <select id="filterSelect">
+                        <option value="normal">Original</option>
+                        <option value="grayscale">Preto e branco</option>
+                        <option value="sepia">Sépia</option>
+                        <option value="contrast">Alto contraste</option>
+                        <option value="vintage">Vintage</option>
+                    </select>
+                    <small>Você pode trocar o filtro antes de fotografar.</small>
+                </div>
+
+                <div class="tip-card">
+                    <span>💡</span>
+                    <div>
+                        <strong>Dica</strong>
+                        <p>
+                            Procure um local bem iluminado para obter
+                            melhores resultados.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <section class="panel result-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">RESULTADO</p>
+                    <h2>Sua fotografia</h2>
+                </div>
+                <span class="result-icon">🖼️</span>
+            </div>
+
+            <div class="result-content">
+                <div class="result-image-container">
+                    <div id="resultPlaceholder" class="result-placeholder">
+                        <div class="placeholder-icon">🖼️</div>
+                        <h3>Nenhuma foto capturada</h3>
+                        <p>Sua fotografia aparecerá aqui.</p>
+                    </div>
+
+                    <img
+                        id="resultImage"
+                        alt="Fotografia capturada"
+                        hidden
+                    >
+                </div>
+
+                <div class="result-details">
+                    <h3>Detalhes da fotografia</h3>
+
+                    <div class="detail-row">
+                        <span>Identificação</span>
+                        <strong id="resultIdentification">—</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Data</span>
+                        <strong id="resultDate">—</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Horário</span>
+                        <strong id="resultTime">—</strong>
+                    </div>
+
+                    <div class="detail-row">
+                        <span>Filtro</span>
+                        <strong id="resultFilter">—</strong>
+                    </div>
+
+                    <a
+                        id="downloadButton"
+                        class="button button-primary disabled"
+                        href="#"
+                        aria-disabled="true"
+                        download="camera-pfe.jpg"
+                    >
+                        ⬇ Baixar fotografia
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="app-footer">
+            <p>Camera PFE Studio · Desenvolvido para fins educacionais.</p>
+        </footer>
+    </main>
+</body>
+</html>
